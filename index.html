@@ -21,9 +21,9 @@
                     alert('event.accelerationIncludingGravity is null');
                     return;
                   }
-                  document.getElementById('x').innerHTML = Math.floor(event.accelerationIncludingGravity.x);
-                  document.getElementById('y').innerHTML = Math.round(event.accelerationIncludingGravity.y*100)/100;
-                  document.getElementById('z').innerHTML = Math.round(event.accelerationIncludingGravity.z*100)/100;
+                  document.getElementById('x').innerHTML = Math.floor(event.acceleration.x*100)/100;
+                  document.getElementById('y').innerHTML = Math.round(event.acceleration.y*100)/100;
+                  document.getElementById('z').innerHTML = Math.round(event.acceleration.z*100)/100;
                 })
               }
             })
