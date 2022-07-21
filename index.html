@@ -1,33 +1,36 @@
-<h1>Hello World</h1>
-
-<button type="button" id="start-button">クリック！</button>
-
-<script>
-  const requestDeviceMotionPermission = () => {
-  if (
-    DeviceMotionEvent &&
-    typeof DeviceMotionEvent.requestPermission === 'function'
-  ) {
-    // iOS 13+ の Safari
-    // 許可を取得
-    DeviceMotionEvent.requestPermission()
-    .then(permissionState => {
-      if (permissionState === 'granted') {
-        // 許可を得られた場合、devicemotionをイベントリスナーに追加
-        window.addEventListener('devicemotion', e => {
-          // devicemotionのイベント処理
-        }）
-      } else {
-        // 許可を得られなかった場合の処理
+<html>
+  <head>
+    <title>DeviceMotion Test</title>
+  </head>
+  <body>
+    <div>
+      <button onClick="deviceMotionRequest()">Click</button>
+      <span id="x">0</span>
+      <span id="y">0</span>
+      <span id="z">0</span>
+    </div>
+    <script>
+      function deviceMotionRequest () {
+        if (DeviceMotionEvent.requestPermission) {
+          DeviceMotionEvent.requestPermission()
+            .then(permissionState => {
+              if (permissionState === 'granted') {
+                window.addEventListener("devicemotion", function (event) {
+                  if (!event.accelerationIncludingGravity) {
+                    alert('event.accelerationIncludingGravity is null');
+                    return;
+                  }
+                  document.getElementById('x').innerHTML = event.accelerationIncludingGravity.x;
+                  document.getElementById('y').innerHTML = event.accelerationIncludingGravity.y;
+                  document.getElementById('z').innerHTML = event.accelerationIncludingGravity.z;
+                })
+              }
+            })
+            .catch(console.error);
+        } else {
+          alert('DeviceMotionEvent.requestPermission is not found')
+        }
       }
-    })
-    .catch(console.error) // https通信でない場合などで許可を取得できなかった場合
-  } else {
-    // 上記以外のブラウザ
-  }
-}
-
-// ボタンクリックでrequestDeviceMotionPermission実行
-const startButton = document.getElementById("start-button")
-startButton.addEventListener('click', requestDeviceMotionPermission, false)
-</script>
+    </script>
+  </body>
+</html>
