@@ -22,7 +22,7 @@
                   }
                   document.getElementById('x').innerHTML = event.accelerationIncludingGravity.x;
                   document.getElementById('y').innerHTML = event.accelerationIncludingGravity.y;
-                  document.getElementById('z').innerHTML = event.accelerationIncludingGravity.z;
+                  document.getElementById('z').innerHTML = Math.round(event.accelerationIncludingGravity.z/100)/100;
                 })
               }
             })
